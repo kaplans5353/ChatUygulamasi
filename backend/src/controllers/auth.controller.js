@@ -1,5 +1,5 @@
 
 
 export const signup = async (req, res) => {
-    res.send("Signup Endpoint3");
+    res.send("Signup Endpoint10");
 }
