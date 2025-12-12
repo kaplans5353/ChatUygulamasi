@@ -1,3 +1,4 @@
+import {ENV} from "./env.js"
 import mongoose from "mongoose"; // MongoDB ile iletişim kurmak için mongoose kütüphanesini import ediyoruz
 import dotenv from "dotenv";      // .env dosyasındaki ortam değişkenlerini kullanmak için dotenv
 dotenv.config();                  // .env dosyasını yükleyip process.env içine alıyoruz
@@ -8,13 +9,13 @@ const connectDB = async () => {
 
     //tavşandan sonra
     // .env dosyasındaki MONGO_URI değişkenini alıyoruz
-    const { MONGO_URI } = process.env;
+    const { MONGO_URI } =ENV;
 
     // Eğer MONGO_URI tanımlı değilse hata fırlatıyoruz
     if(!MONGO_URI) throw new Error("MONGO_URI is not set"); // MONGO_URI yoksa çalışmayı durdur
 
     // Mongoose ile MongoDB'ye bağlanıyoruz
-    const conn = await mongoose.connect(MONGO_URI);
+    const conn = await mongoose.connect(ENV.MONGO_URI);
 
     // Başarılı bağlantı mesajı konsola yazdırılır
     console.log("✅ MongoDB Bağlantısı Başarılı");
@@ -25,5 +26,6 @@ const connectDB = async () => {
   }
 };
 
-// Bu fonksiyonu başka dosyalarda kullanabilmek için export ediyoruz
+// Bu fonksiyonu başka dosyalarda kullanabilmek iç
+// in export ediyoruz
 export default connectDB;

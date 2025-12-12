@@ -1,6 +1,9 @@
 
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
+import "dotenv/config";
+import { sendWelcomeEmail } from "../emails/emailHandlers.js";
+import {ENV} from "../lib/env.js"
 
 import generateToken from "../lib/utils.js";
 
@@ -57,6 +60,17 @@ export const signup = async (req, res) => {
             profilePic: newUser.profilePic
         });
 
+      //   //EMAİL İÇİN 
+        try {
+         await sendWelcomeEmail(savedUser.email, savedUser.fullName, ENV.CLIENT_URL);
+        } catch (error) {
+          console.log("Failed to send velcome email", error);
+        }
+
+
+
+
+
      }else{
         res.status(400).json({message: "Gecersiz kullanıcı verileri!"});
      }
@@ -64,7 +78,7 @@ export const signup = async (req, res) => {
 
    } catch (error) {
     console.log("error in signup controller", error);
-    res.status(500).json({message: "internet server hatası"})
+    res.status(500).json({message: "internet server hatası"});
    }
 
 }
